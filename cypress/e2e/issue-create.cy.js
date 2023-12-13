@@ -4,7 +4,7 @@ describe('Issue create', () => {
     cy.visit('/');
     cy.url().should('eq', `${Cypress.env('baseUrl')}project/board`).then((url) => {
       //System will already open issue creating modal in beforeEach block  
-      cy.visit(url + '/board?modal-issue-create=true');
+      cy.visit(url + '/board?modal-issue-create=true')
     });
   });
   const IssueTitle = faker.lorem.word()
@@ -95,7 +95,7 @@ describe('Issue create', () => {
     })
   });
 
-  it.only('Issue creation using faker for title and description', () => {
+  it('Issue creation using faker for title and description', () => {
     cy.get('[data-testid="modal:issue-create"]').within(() => {
       //Open issue type dropdown and choose Task
       cy.get('[data-testid="select:type"]').click()
@@ -121,7 +121,7 @@ describe('Issue create', () => {
 
     //Assert that successful message has dissappeared after the reload
     cy.reload()
-    cy.contains('Issue has been successfully created.').should('not.exist')
+    cy.contains('Issue has been successfully created.').should('not.exist');
 
   //Assert that correct avatar and type icon, priority are visible
     cy.get('[data-testid="board-list:backlog"]').contains(IssueTitle).parent().within(() => {
@@ -129,17 +129,19 @@ describe('Issue create', () => {
       cy.get('[data-testid="icon:arrow-down"]').should('be.visible')
       cy.get('[data-testid="avatar:Baby Yoda"]').should('be.visible')
        })
+});
+it('Should validate title is required field if missing', () => {
+  //System finds modal for creating issue and does next steps inside of it
+  cy.get('[data-testid="modal:issue-create"]').within(() => {
+
+    //Click create issue button without filling any data
+    cy.get('button[type="submit"]').click()
+
+    //Assert that correct error message is visible
+    cy.get('[data-testid="form-field:title"]').should('contain', 'This field is required')
+  })
 })
-  });
+  })
 
 
-  it('Should validate title is required field if missing', () => {
-    //System finds modal for creating issue and does next steps inside of it
-    cy.get('[data-testid="modal:issue-create"]').within(() => {
-      //Try to click create issue button without filling any data
-      cy.get('button[type="submit"]').click();
 
-      //Assert that correct error message is visible
-      cy.get('[data-testid="form-field:title"]').should('contain', 'This field is required');
-    });
-  });

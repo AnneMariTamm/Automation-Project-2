@@ -124,12 +124,6 @@ describe('Issue create', () => {
     cy.contains('Issue has been successfully created.').should('not.exist')
 
   //Assert that correct avatar and type icon, priority are visible
-    //cy.get('[data-testid="board-list:backlog"]').should('be.visible').and('have.length', '1').within(() => {
-      //cy.get('[data-testid="list-issue"]')
-       // .first().find('p').contains(IssueTitle)
-         // cy.get('[data-testid="icon:task"]').should('be.visible')
-         // cy.get('[data-testid="icon:arrow-down"]').should('be.visible')
-         // cy.get('[data-testid="avatar:Baby Yoda"]').should('be.visible')
     cy.get('[data-testid="board-list:backlog"]').contains(IssueTitle).parent().within(() => {
       cy.get('[data-testid="icon:task"]').should('be.visible');
       cy.get('[data-testid="icon:arrow-down"]').should('be.visible')

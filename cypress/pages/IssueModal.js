@@ -46,7 +46,7 @@ class IssueModal {
 
     createIssue(issueDetails) {
         this.getIssueModal().within(() => {
-            this.selectIssueType(issueDetails.type);
+            this.selectIssueType(issueDetails.issue);
             this.editDescription(issueDetails.description);
             this.editTitle(issueDetails.title);
             this.selectAssignee(issueDetails.assignee);
@@ -60,9 +60,9 @@ class IssueModal {
         cy.contains('Issue has been successfully created.').should('not.exist');
 
         cy.get(this.backlogList).should('be.visible').and('have.length', '1').within(() => {
-            cy.get(this.issuesList)
-                .should('have.length', expectedAmountIssues)
-                .first()
+          cy.get(this.issuesList)
+          .should('have.length', expectedAmountIssues)
+             .first()
                 .find('p')
                 .contains(issueDetails.title);
             cy.get(`[data-testid="avatar:${issueDetails.assignee}"]`).should('be.visible');

@@ -8,13 +8,14 @@ describe('Issue deletion', () => {
             //Create to issue for deletion
             cy.visit(url + '/board?modal-issue-create=true')
             createNewIssue()
+             //Open just created issue
+            cy.contains(IssueTitle).click()
         })
 
     })
 
     it('Delete Issue', () => {
-        //Open just created issue
-        cy.contains(IssueTitle).click()
+    
         getIssueDetailsModal().within(() => {
             cy.get('[data-testid="icon:trash"]').click()
         })
@@ -27,15 +28,14 @@ describe('Issue deletion', () => {
     });
 
     it('Cancel deleting Issue', () => {
-        //Open just created issue
-        cy.contains(IssueTitle).click()
         getIssueDetailsModal().within(() => {
             cy.get('[data-testid="icon:trash"]').click()
         })
         cy.contains(deleteConfirm).should('exist')
         cy.contains(cancelTitle).click()
         cy.contains(deleteConfirm).should('not.exist')
-        cy.reload()
+        cy.get('[data-testid="icon:close"]').first().click()
+        getIssueDetailsModal().should('not.exist')
         cy.contains(IssueTitle).should('exist')
 
     });

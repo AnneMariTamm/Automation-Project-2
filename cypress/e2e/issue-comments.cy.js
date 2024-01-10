@@ -16,6 +16,8 @@ describe("Issue comments creating, editing and deleting", () => {
 
   it("Should create a comment successfully", () => {
     const comment = "TEST_COMMENT";
+  it("Should create a comment successfully", () => {
+    const comment = "TEST_COMMENT";
 
     getIssueDetailsModal().within(() => {
       cy.contains("Add a comment...").click();
